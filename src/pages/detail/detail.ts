@@ -54,6 +54,9 @@ export class DetailPage {
         (data)=>{
           this.jugadorJSON = data;
           this.mostrarEstadisticas();
+          if(this.ultimodatoRitmo > 140){
+            this.showAlert();
+          }
         }
       );
   }

@@ -25213,3 +25213,7 @@ ion-navbar.toolbar {
     width: 80% !important;
   }
 }
+
+.chart-container {
+  overflow: auto;
+}

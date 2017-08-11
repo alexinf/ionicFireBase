@@ -64,6 +64,9 @@ var DetailPage = (function () {
         this.jugador.subscribe(function (data) {
             _this.jugadorJSON = data;
             _this.mostrarEstadisticas();
+            if (_this.ultimodatoRitmo > 140) {
+                _this.showAlert();
+            }
         });
     }
     DetailPage.prototype.showAlert = function () {
@@ -117,12 +120,11 @@ var DetailPage = (function () {
 DetailPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* IonicPage */])(),
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-detail',template:/*ion-inline-start:"/Users/irvin/Documents/sites/ionicFireBase/src/pages/detail/detail.html"*/'<ion-header>\n  <ion-navbar color="primary">\n    <ion-title>Datos Jugador</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content >\n    <ion-card>\n   <img [src]="(jugador | async)?.imagen"/> \n      <ion-card-content>\n        <ion-card-title>\n            {{(jugador | async)?.nombre}} \n          <p style="color:black;">Ritmo Cardiaco : {{ultimodatoRitmo}}</p>\n          <p style="color:#0AA2D6;">Velocidad : {{ultimodatoVelocidad}}</p>\n        </ion-card-title>\n    <!-- <button (click)="mostrarEstadisticas()" *ngIf="jugador!=null " ion-button color="dark" round>Ver estadisticas</button> -->\n    <button (click)="botonPres=!botonPres" *ngIf="jugador!=null"\n    ion-button color="secondary" large>\n    Ver estadisticas\n      <ion-icon class="iconBtn" name="walk"></ion-icon> \n    </button> \n      </ion-card-content>\n    </ion-card>\n    <script> showAlert.alert() </script>\n    <chart id="chart" *ngIf="botonPres" [options]="chartOptions" type="chart"></chart>\n    <!-- <p>{{jugador | async | json}}</p>   -->\n<!-- <button ion-button block color="dark" (click)="showAlert()">Show Basic Alert</button> -->\n</ion-content>\n'/*ion-inline-end:"/Users/irvin/Documents/sites/ionicFireBase/src/pages/detail/detail.html"*/,
+        selector: 'page-detail',template:/*ion-inline-start:"/Users/irvin/Documents/sites/ionicFireBase/src/pages/detail/detail.html"*/'<ion-header>\n  <ion-navbar color="primary">\n    <ion-title>Datos Jugador</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content >\n    <ion-card>\n   <img [src]="(jugador | async)?.imagen"/> \n      <ion-card-content>\n        <ion-card-title>\n            {{(jugador | async)?.nombre}} \n          <p style="color:black;">Ritmo Cardiaco : {{ultimodatoRitmo}}</p>\n          <p style="color:#0AA2D6;">Velocidad : {{ultimodatoVelocidad}}</p>\n        </ion-card-title>\n    <!-- <button (click)="mostrarEstadisticas()" *ngIf="jugador!=null " ion-button color="dark" round>Ver estadisticas</button> -->\n    <button (click)="botonPres=!botonPres" *ngIf="jugador!=null"\n    ion-button color="secondary" large>\n    Ver estadisticas\n      <ion-icon class="iconBtn" name="walk"></ion-icon> \n    </button> \n      </ion-card-content>\n    </ion-card>\n    <script> showAlert.alert() </script>\n\n    <div class="chart-container" style="position: relative; height:40vh; width:80vw">\n      <chart id="chart" *ngIf="botonPres" [options]="chartOptions" type="chart"></chart>\n    </div>\n    <!-- <p>{{jugador | async | json}}</p>   -->\n<!-- <button ion-button block color="dark" (click)="showAlert()">Show Basic Alert</button> -->\n</ion-content>\n'/*ion-inline-end:"/Users/irvin/Documents/sites/ionicFireBase/src/pages/detail/detail.html"*/,
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2_angularfire2_database__["a" /* AngularFireDatabase */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_angularfire2_database__["a" /* AngularFireDatabase */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]) === "function" && _d || Object])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2_angularfire2_database__["a" /* AngularFireDatabase */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]])
 ], DetailPage);
 
-var _a, _b, _c, _d;
 //# sourceMappingURL=detail.js.map
 
 /***/ }),
