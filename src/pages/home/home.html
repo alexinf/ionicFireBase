@@ -1,0 +1,19 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>
+      <ion-title>UMSS-APP</ion-title>
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list>
+    <ion-item (click)="goTodetail(item.$key)" *ngFor="let item of jugadores | async">
+      <ion-avatar item-start>
+        <img [src]="item.imagen">
+      </ion-avatar>
+      <h2> {{item.nombre}} </h2>
+      <p>por definir</p>
+    </ion-item>
+  </ion-list>
+</ion-content>
