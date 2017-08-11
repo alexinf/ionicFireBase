@@ -9,8 +9,10 @@
 <ion-content padding>
   <ion-list>
     <ion-item (click)="goTodetail(item.$key)" *ngFor="let item of jugadores | async">
-      <ion-avatar item-start>
+      <ion-thumbnail item-start>
         <img [src]="item.imagen">
+      </ion-thumbnail>
+      <ion-avatar item-start>
       </ion-avatar>
       <h2> {{item.nombre}} </h2>
       <p>por definir</p>

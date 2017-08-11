@@ -1,3 +1,18 @@
 page-detail {
 
 }
+
+.iconBtn{
+    margin: 10px;
+    font-size: 2em;
+}
+
+#chart{
+    max-width: 100%;   
+}
+
+@media (max-width: 600px) {
+  svg.highcharts-root{
+      width: 80% !important;
+  }
+}

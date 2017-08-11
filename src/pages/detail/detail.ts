@@ -57,6 +57,7 @@ export class DetailPage {
         }
       );
   }
+
   showAlert() {
     let alert = this.alertController.create({
       title: 'New Friend!',
@@ -78,6 +79,11 @@ export class DetailPage {
     for(let item in lista){
       // console.log(lista[item].valor);
       resp.push(lista[item].valor);
+    }
+    
+    let size = resp.length;
+    if(size > 6){
+      resp = resp.slice(size-6,size);
     }
     return resp;
   }
