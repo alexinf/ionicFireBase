@@ -7,6 +7,17 @@
 </ion-header>
 
 <ion-content padding>
+  <h1>jugadores</h1>
+  <ion-list>
+    <ion-item (click)="goTodetail(item.$key)" *ngFor="let item of jugadores | async">
+      <ion-avatar item-start>
+        <img [src]="item.imagen">
+      </ion-avatar>
+      <h2>{{item.nombre}}</h2>
+      <h3>aun por definir</h3>
+    </ion-item>
+  </ion-list>
+
   <ion-list>
     <ion-item (click)="goTodetail(item.$key)" *ngFor="let item of jugadores | async">
       <ion-thumbnail item-start>
@@ -18,4 +29,9 @@
       <p>por definir</p>
     </ion-item>
   </ion-list>
+
+  <ion-fab right bottom>
+    <button (click)="goToNew()" ion-fab color="secondary"><ion-icon name="add"></ion-icon></button>
+  </ion-fab>
+
 </ion-content>

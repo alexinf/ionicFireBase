@@ -8,14 +8,13 @@ import { AngularFireDatabase,FirebaseObjectObservable  } from 'angularfire2/data
  * on Ionic pages and navigation.
  */
 
-
-
 @IonicPage()
 @Component({
   selector: 'page-detail',
   templateUrl: 'detail.html',
 })
 export class DetailPage {
+  
   jugadorJSON: any;
   jugador:FirebaseObjectObservable<any>;
   key:string;
@@ -23,13 +22,115 @@ export class DetailPage {
   botonPres:boolean = false; 
   ultimodatoVelocidad:number=0;
   ultimodatoRitmo:number=0;
-  constructor(public navCtrl: NavController, public navParams: NavParams,db: AngularFireDatabase,public alertController: AlertController) {
-    this.chartOptions = {
+  contador: number = 0;
+  
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+    db: AngularFireDatabase,public alertController: AlertController) {
+    this.chartOptions = this.getChart();
+    this.key = navParams.get("key");
+    
+    this.jugador = db.object('/jugadores/'+this.key);
+    this.jugador.subscribe( (data)=>{
+      this.contador++;
+      this.jugadorJSON = data;
+      this.mostrarEstadisticas();
+      this.controls();
+    });
+
+  }
+
+  controls(){
+    if(this.ultimodatoRitmo > 140){
+      this.showAlert();
+    }
+    if(this.contador>8){
+      this.mostrarEstadisticas();
+      this.contador = 0;
+    }
+  }
+
+  showAlert() {
+    let alert = this.alertController.create({
+      title: 'New Friend!',
+      subTitle: 'Your friend, Obi wan Kenobi, just accepted your friend request!',
+      buttons: ['OK']
+    });
+    alert.present();
+  }
+
+  listaFirebaseAarray(lista: any[]){
+    let maxSize = 8;
+    let resp = [];
+    for(let item in lista){
+      resp.push(lista[item].valor);
+    }
+    
+    let size = resp.length;
+    if(size > maxSize){
+      resp = resp.slice(size-maxSize,size);
+    }
+    return resp;
+  }
+
+  mostrarEstadisticas(){
+    this.botonPres=true;
+    this.chartOptions = this.getChart();
+    let series = this.chartOptions.series;
+    let velocidad = this.getVelocidad();
+    let ritmo = this.getRitmo();
+    series.push(velocidad);
+    series.push(ritmo);
+    this.updateStates(velocidad, ritmo);
+  }
+
+  simulatePromise(_velocidad, _ritmo){
+    this.botonPres=true;
+    this.chartOptions = this.getChart();
+    let series = this.chartOptions.series;
+    let velocidad = this.getVelocidad();
+    let ritmo = this.getRitmo2();
+    series.push(velocidad);
+    series.push(ritmo);
+    this.updateStates(velocidad, ritmo);
+  }
+
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad DetailPage');
+  }
+
+  getVelocidad(): any{
+    return {
+      name:"velocidad",
+      data: this.listaFirebaseAarray(this.jugadorJSON.estado.velocidad)
+    };
+  }
+
+  getRitmo():any{
+    return {
+      name:"ritmo",
+      data: this.listaFirebaseAarray(this.jugadorJSON.estado.ritmo)
+    };
+  }
+
+  getRitmo2():any{
+    return {
+      name:"ritmo",
+      data: [100,100,100,100,100,100,120]
+    };
+  }
+
+  updateStates(velocidad, ritmo): void{
+    this.ultimodatoRitmo = ritmo.data[ritmo.data.length-1];
+    this.ultimodatoVelocidad = velocidad.data[velocidad.data.length-1];
+  }
+
+  getChart(){
+    return {
             chart: {
                 type: 'spline'
             },
             title: {
-                text: 'Jugador datos'
+                text: 'datos del Jugador'
             },
             // xAxis: {
             //     categories: ['velocidad', 'Pulso Cardiaco']
@@ -48,69 +149,5 @@ export class DetailPage {
             //     data: [5, 7, 3]
             // }]
         }
-    this.key = navParams.get("key");
-      this.jugador = db.object('/jugadores/'+this.key);
-      this.jugador.subscribe(
-        (data)=>{
-          this.jugadorJSON = data;
-          this.mostrarEstadisticas();
-          if(this.ultimodatoRitmo > 140){
-            this.showAlert();
-          }
-        }
-      );
-  }
-
-  showAlert() {
-    let alert = this.alertController.create({
-      title: 'New Friend!',
-      subTitle: 'Your friend, Obi wan Kenobi, just accepted your friend request!',
-      buttons: ['OK']
-    });
-    alert.present();
-  }
-
-
-  listaFirebaseAarray(lista: any[]){
-    // return lista.map(
-    //   (item)=>{
-    //     return item.valor;
-    //   }
-    // );
-    // console.log(lista);
-    let resp = [];
-    for(let item in lista){
-      // console.log(lista[item].valor);
-      resp.push(lista[item].valor);
-    }
-    
-    let size = resp.length;
-    if(size > 6){
-      resp = resp.slice(size-6,size);
-    }
-    return resp;
-  }
-
-  mostrarEstadisticas(){
-    this.botonPres=true;
-    let series = this.chartOptions.series;
-
-    let velocidad = {
-      name:"velocidad",
-      data: this.listaFirebaseAarray(this.jugadorJSON.estado.velocidad)
-    }
-    let ritmo = {
-      name:"ritmo",
-      data: this.listaFirebaseAarray(this.jugadorJSON.estado.ritmo)
-    }
-    console.log(velocidad);
-    series.push(velocidad);
-    series.push(ritmo);
-    this.ultimodatoRitmo = ritmo.data[ritmo.data.length-1];
-    this.ultimodatoVelocidad = velocidad.data[velocidad.data.length-1];
-  }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad DetailPage');
   }
 }

@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>Crear nuevo Jugador</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content >
+  <br>
+  <br>
+  <ion-list>
+    <ion-item>
+      <ion-label floating>Nombre</ion-label>
+      <ion-input [(ngModel)]="text"  type="text"></ion-input>
+    </ion-item>
+    <br>
+    <ion-fab right>
+      <button (click)="save()" ion-fab color="secondary"><ion-icon name="checkmark"></ion-icon></button>
+    </ion-fab>
+</ion-list>
+   
+</ion-content>
