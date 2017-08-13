@@ -31,19 +31,20 @@ export class DetailPage {
     
     this.jugador = db.object('/jugadores/'+this.key);
     this.jugador.subscribe( (data)=>{
-      this.contador++;
       this.jugadorJSON = data;
-      this.mostrarEstadisticas();
+      // this.mostrarEstadisticas();
       this.controls();
+      this.contador++;
+      this.updateStates();
     });
 
   }
 
   controls(){
     if(this.ultimodatoRitmo > 140){
-      this.showAlert();
+      //this.showAlert();
     }
-    if(this.contador>8){
+    if(this.contador>=3 || this.contador == 0){
       this.mostrarEstadisticas();
       this.contador = 0;
     }
@@ -80,18 +81,6 @@ export class DetailPage {
     let ritmo = this.getRitmo();
     series.push(velocidad);
     series.push(ritmo);
-    this.updateStates(velocidad, ritmo);
-  }
-
-  simulatePromise(_velocidad, _ritmo){
-    this.botonPres=true;
-    this.chartOptions = this.getChart();
-    let series = this.chartOptions.series;
-    let velocidad = this.getVelocidad();
-    let ritmo = this.getRitmo2();
-    series.push(velocidad);
-    series.push(ritmo);
-    this.updateStates(velocidad, ritmo);
   }
 
   ionViewDidLoad() {
@@ -119,7 +108,9 @@ export class DetailPage {
     };
   }
 
-  updateStates(velocidad, ritmo): void{
+  updateStates(){
+    let velocidad = this.getVelocidad();
+    let ritmo = this.getRitmo2();
     this.ultimodatoRitmo = ritmo.data[ritmo.data.length-1];
     this.ultimodatoVelocidad = velocidad.data[velocidad.data.length-1];
   }
